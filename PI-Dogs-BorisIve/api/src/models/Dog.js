@@ -4,10 +4,10 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('dog', {
-    id: {
+    uuid: {
       type: DataTypes.UUID,
-      primaryKey: true,
-      defaulValue: DataTypes.UUIDV1
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false
     },
     image: {
       type: DataTypes.STRING,
