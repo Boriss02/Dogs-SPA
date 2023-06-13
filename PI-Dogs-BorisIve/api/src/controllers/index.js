@@ -81,7 +81,14 @@ const getIdBD = async (idRaza)=>{
 
 // GET | /dogs/name?="...", trae tanto de la API como de la BD los perros que coincidan con el name pasado por query. No distingue entre mayusculas o minusculas.
 const getDogsName = async (name)=>{
-
+    const rawApiNames = await axios.get(`${searchRaza}${name}`);
+    const apiNames = rawApiNames.data.map(dog=>{
+        return {
+            name: dog.name
+        }
+    });
+    
+    return apiNames;
 };
 
 
@@ -95,7 +102,7 @@ const postDog = async (name, height, weight, lifespan, temperaments)=>{
         lifespan: lifespan
     })
     // console.log(preDog);
-    const dogTemps = await Temperament.bulkCreate(temperaments);
+    // const dogTemps = await Temperament.bulkCreate(temperaments);
     const result = await preDog.addTemperament(dogTemps, {through: {selfGranted: false}});
     console.log(result);
     return result;

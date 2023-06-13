@@ -2,11 +2,21 @@ const dogsRouter = require("express").Router();
 const {getDogs, getIdApi, getIdBD, getDogsName, postDog} = require("../controllers/index");
 
 dogsRouter.get("/", async (req, res)=>{
-    try {
-        const allDogs = await getDogs();
-        res.status(200).json(allDogs);
-    } catch (error) {
-        res.status(500).send(error.message);
+    const {name} = req.query;
+    if(name){
+        try {
+            const dogsName = await getDogsName(name);
+            res.status(200).json(dogsName);
+        } catch (error) {
+            res.status(500).json(error.message);
+        }
+    } else {
+        try {
+            const allDogs = await getDogs();
+            res.status(200).json(allDogs);
+        } catch (error) {
+            res.status(500).send(error.message);
+        }
     }
 });
 
@@ -31,9 +41,19 @@ dogsRouter.get("/:idRaza", async (req, res)=>{
 });
 
 
-dogsRouter.get("/name", async (req, res)=>{
-    
-});
+// dogsRouter.get("/name", async (req, res)=>{
+//     const {name} = req.query;
+//     console.log("hola");
+//     try {
+//         if(!name) throw Error("No se recibió ningún nombre");
+//         else {
+//             const dogsName = await getDogsName(name);
+//             res.status(200).json(dogsName);
+//         }
+//     } catch (error) {
+//         res.status(500).json(error.message);
+//     }
+// });
 
 
 dogsRouter.post("/", async (req, res)=>{
