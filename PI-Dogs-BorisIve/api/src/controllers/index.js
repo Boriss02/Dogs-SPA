@@ -1,26 +1,29 @@
+const {Op} = require("sequelize");
 const axios = require("axios");
 const {Dog, Temperament} = require("../db");
 require('dotenv').config();
 const {API_KEY} = process.env;
 const URL = `https://api.thedogapi.com/v1/breeds`;
 const searchRaza = "https://api.thedogapi.com/v1/breeds/search?q=";
-const imageDog = "https://lh3.googleusercontent.com/bPiMooQ3ATrdmTExzJlnlU_DVI6FviWMBgGTOmF8-5twX9tdHls33Ffs5eBrDhZEIXBSVr82ukke9lfiwomsx7oVY9pwsjz7SLTnASuQ";
+const imageDog = "https://images.pexels.com/photos/5122188/pexels-photo-5122188.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
 
 // GET | /dogs, trae los perros de la API y se queda con sus propiedades: IMAGEN, NOMBRE, TEMPERAMENTOS, PESO. Los junta con los de la BD, con esas mismas propiedades.
 const getDogs = async ()=>{
     const rawApi = await axios.get(`${URL}?api_key=${API_KEY}`);
     const niceApi = rawApi.data.map((dog)=>{
         return {
-            image: dog.image,
+            id: dog.id,
+            image: dog.image.url,
             name: dog.name,
             temperament: dog.temperament,
-            weight: dog.weight
+            weight: dog.weight.metric
         }
     });
 
     const rawBD = await Dog.findAll({include: Temperament});
     const niceBD = rawBD.map(dog=>{
         return {
+            id: dog.uuid,
             image: dog.image,
             name: dog.name,
             temperament: dog.temperaments.map(temp=>{
@@ -43,10 +46,10 @@ const getIdApi = async (idRaza)=>{
     if(ApiDog){
         return {
             id: idRaza,
-            image: ApiDog.image,
+            image: ApiDog.image.url,
             name: ApiDog.name,
-            height: ApiDog.height,
-            weight: ApiDog.weight,
+            height: ApiDog.height.metric,
+            weight: ApiDog.weight.metric,
             temperament: ApiDog.temperament,
             lifespan: ApiDog.life_span
         }
@@ -87,8 +90,28 @@ const getDogsName = async (name)=>{
             name: dog.name
         }
     });
+
+    const rawNamesBD = await Dog.findAll({
+        where: {
+            name: {
+                [Op.iLike]: `%${name}%`
+            }
+        },
+        include: Temperament
+    });
+    const namesBD = rawNamesBD.map(dog=>{
+        return {
+            name: dog.name
+        }
+    });
+
+    const allNames = [...namesBD, ...apiNames]
     
-    return apiNames;
+    if(!allNames.length){
+        throw Error("No existe raza parecida");
+    } else {
+        return allNames;
+    }
 };
 
 
@@ -99,7 +122,7 @@ const postDog = async (name, height, weight, lifespan, temperaments)=>{
         name: name,
         height: height,
         weight: weight,
-        lifespan: lifespan
+        lifespan: `${lifespan} years`
     })
     // console.log(preDog);
     // const dogTemps = await Temperament.bulkCreate(temperaments);
