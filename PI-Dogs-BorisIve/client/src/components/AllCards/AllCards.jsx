@@ -1,16 +1,15 @@
 import Card from "../Card/Card";
 import { getDogs } from "../../redux/actions";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import { useEffect } from "react";
 
-const AllCards = ()=>{
+const AllCards = ({allDogs})=>{
     const dispatch = useDispatch();
-    const allDogs = useSelector(state => state.allDogs)
 
     useEffect(()=>{
         dispatch(getDogs())
     }, [dispatch])
-
+    
     return(
         <div>
             {

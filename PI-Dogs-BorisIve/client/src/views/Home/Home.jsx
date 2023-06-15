@@ -1,12 +1,12 @@
-import SearchBar from "../../components/SearchBar/SearchBar";
+import NavBar from "../../components/NavBar/NavBar";
 import AllCards from "../../components/AllCards/AllCards";
 
-const Home = ()=>{
+const Home = ({allDogs})=>{
     return(
         <div>
-            <SearchBar/>
+            <NavBar/>
             <h1>Home</h1>
-            <AllCards/>
+            <AllCards allDogs={allDogs}/>
         </div>
     )
 }
