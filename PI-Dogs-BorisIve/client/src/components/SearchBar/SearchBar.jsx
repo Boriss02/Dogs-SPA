@@ -16,8 +16,8 @@ const SearchBar = ()=>{
 
     return(
         <div>
-            <input type='search' name="search" value={name} onChange={handlerChange} placeholder="Nombre de la raza a buscar" />
-            <button onClick={()=>{doSearch(name)}}>BUSCAR</button>
+            <input type='search' name="search" value={name} onChange={handlerChange} placeholder="Name to search" />
+            <button onClick={()=>{doSearch(name)}}>SEARCH</button>
         </div>
     )
 }

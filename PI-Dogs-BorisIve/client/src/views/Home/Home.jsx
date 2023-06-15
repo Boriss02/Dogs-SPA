@@ -6,7 +6,7 @@ const Home = ({allDogs})=>{
         <div>
             <NavBar/>
             <h1>Home</h1>
-            <AllCards allDogs={allDogs}/>
+            <AllCards allDogs={allDogs} />
         </div>
     )
 }
