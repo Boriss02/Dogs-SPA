@@ -138,6 +138,9 @@ const postDog = async (name, height, weight, lifespan, temperaments)=>{
 
 // GET | /temperaments, obtiene los temperamerntos existentes de la API, y los guarda en la BD para su posterior consumo desede alli.
 const getTemps = async ()=>{
+    const tempsDB = await Temperament.findAll();
+    if(tempsDB.length) return tempsDB;
+
     let allTemps = [];
     const allApi = await axios.get(`${URL}?api_key=${API_KEY}`);
     allApi.data.map(dog=>{
