@@ -1,7 +1,6 @@
 import Card from "../Card/Card";
-import { useState, useEffect } from "react";
 
-const AllCards = ({allDogs})=>{
+const AllCards = ({eight, page, nextHandler, prevHandler})=>{
     // const [page, setPage] = useState(1);
     // const dogsPerPage = 8;
     // const startIndex = (page - 1) * dogsPerPage;
@@ -25,34 +24,6 @@ const AllCards = ({allDogs})=>{
     //     setPage(page - 1);
     //   }
     // };
-
-
-    const [eight, setEight] = useState([]);
-    const [page, setPage] = useState(1);
-
-    useEffect(()=>{
-        setEight([...allDogs].splice(0, 8));
-    }, [allDogs]);
-  
-    const nextHandler = ()=>{
-      const totalDogs = allDogs.length;
-      const nextPage = page + 1;
-      const firstIndex = (nextPage - 1) * 8;
-      if(firstIndex === totalDogs) return;
-
-      setEight([...allDogs].splice(firstIndex, 8));
-      setPage(nextPage);
-    };
-  
-    const prevHandler = ()=>{
-        const prevPage = page - 1;
-        if(prevPage < 1) return;
-        const firstIndex = (prevPage - 1) * 8;
-
-        setEight([...allDogs].splice(firstIndex, 8));
-        setPage(prevPage);
-    };
-
 
     return(
         <div>
