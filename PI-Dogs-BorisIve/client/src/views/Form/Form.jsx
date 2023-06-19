@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Form = ()=>{
+const Form = ({allTemps})=>{
     const [form, setForm] = useState({
         name: "",
         height: "",

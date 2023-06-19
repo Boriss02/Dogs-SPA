@@ -1,32 +1,35 @@
 import Card from "../Card/Card";
+import { useEffect } from "react";
 
-const AllCards = ({eight, page, nextHandler, prevHandler})=>{
-    // const [page, setPage] = useState(1);
-    // const dogsPerPage = 8;
-    // const startIndex = (page - 1) * dogsPerPage;
-    // const endIndex = page * dogsPerPage;
-    // const dogsToShow = allDogs.slice(startIndex, endIndex);
-  
-    // useEffect(() => {
-    //   setPage(1); // Reiniciar la página cuando cambie `allDogs`
-    // }, [allDogs]);
-  
-    // const nextHandler = () => {
-    //   const totalDogs = allDogs.length;
-    //   const totalPages = Math.ceil(totalDogs / dogsPerPage);
-    //   if (page < totalPages) {
-    //     setPage(page + 1);
-    //   }
-    // };
-  
-    // const prevHandler = () => {
-    //   if (page > 1) {
-    //     setPage(page - 1);
-    //   }
-    // };
+const AllCards = ({eight, page, nextHandler, prevHandler, allTemps, handlerTemps, handlerPlace, handlerABC, handlerWeight, filteredDogs, setBeta})=>{
+    useEffect(()=>{
+        setBeta([...filteredDogs])
+    }, [filteredDogs]);
 
     return(
         <div>
+            <select >
+
+            </select>
+            
+
+            <select onChange={(event)=>{handlerPlace(event)}} >
+                <option value="API">API</option>
+                <option value="DataBase">DataBase</option>
+            </select>
+            
+
+            <select onChange={(event)=>{handlerABC(event)}} >
+                <option value="A-Z">A-Z</option>
+                <option value="Z-A">Z-A</option>
+            </select>
+            
+
+            <select onChange={(event)=>{handlerWeight(event)}} >
+                <option value="Heavy-Light">Heavy-Light</option>
+                <option value="Light-Heavy">Light-Heavy</option>
+            </select>
+
             {
                 eight.map((dog)=>{
                     console.log(dog.id);

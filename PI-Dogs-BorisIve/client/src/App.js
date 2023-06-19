@@ -6,32 +6,42 @@ import Detail from "./views/Detail/Detail";
 import Form from "./views/Form/Form";
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getDogs } from './redux/actions';
+import { getDogs, getTemps } from './redux/actions';
+import { filtTemps, filtPlace, filtABC, filtWeight } from "./redux/actions";
 
 function App() {
-  const allDogs = useSelector(state=> state.allDogs);
   const dispatch = useDispatch();
+
+  const allDogs = useSelector(state=> state.allDogs);
+  const allTemps = useSelector(state=> state.allTemps);
+  const filteredDogs = useSelector(state=> state.filteredDogs);
   
   useEffect(()=>{
     dispatch(getDogs())
+    dispatch(getTemps())
   }, [dispatch]);
 
 
   // PAGINADO ---------------------------------------
-  const [eight, setEight] = useState([]);
+  const [beta, setBeta] = useState([]);
+  const [eight, setEight] = useState([...beta]);
   const [page, setPage] = useState(1);
 
   useEffect(()=>{
-    setEight([...allDogs].splice(0, 8));
+    setBeta([...allDogs]);
   }, [allDogs]);
+
+  useEffect(()=>{
+    setEight([...beta].splice(0, 8))
+  }, [beta]);
   
   const nextHandler = ()=>{
-    const totalDogs = allDogs.length;
+    const totalDogs = beta.length;
     const nextPage = page + 1;
     const firstIndex = (nextPage - 1) * 8;
     if(firstIndex === totalDogs) return;
 
-    setEight([...allDogs].splice(firstIndex, 8));
+    setEight([...beta].splice(firstIndex, 8));
     setPage(nextPage);
   };
   
@@ -40,19 +50,39 @@ function App() {
     if(prevPage < 1) return;
     const firstIndex = (prevPage - 1) * 8;
 
-    setEight([...allDogs].splice(firstIndex, 8));
+    setEight([...beta].splice(firstIndex, 8));
     setPage(prevPage);
   };
   // -------------------------------------------------
 
-  
+  // FILTROS -----------------------------------------
+  const handlerTemps = ()=>{
+
+  };
+
+  const handlerPlace = (event)=>{
+    dispatch(filtPlace(event.target.value));
+  };
+
+  const handlerABC = (event)=>{
+    dispatch(filtABC(event.target.value));
+  };
+
+  const handlerWeight = (event)=>{
+    dispatch(filtWeight(event.target.value));
+  };
+
+
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Landing/>} />
-        <Route path="/home" element={<Home eight={eight} page={page} nextHandler={nextHandler} prevHandler={prevHandler} />} />
+
+        <Route path="/home" element={<Home eight={eight} page={page} nextHandler={nextHandler} prevHandler={prevHandler} allTemps={allTemps} handlerTemps={handlerTemps} handlerPlace={handlerPlace} handlerABC={handlerABC} handlerWeight={handlerWeight} filteredDogs={filteredDogs} setBeta={setBeta} />} />
+
         <Route path="/detail/:id" element={<Detail/>} />
-        <Route path="/create" element={<Form/>} />
+
+        <Route path="/create" element={<Form allTemps={allTemps} />} />
       </Routes>
     </div>
   );
