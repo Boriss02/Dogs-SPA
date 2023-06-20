@@ -1,7 +1,7 @@
 import Card from "../Card/Card";
 import { useEffect } from "react";
 
-const AllCards = ({eight, page, nextHandler, prevHandler, allTemps, handlerTemps, handlerPlace, handlerABC, handlerWeight, filteredDogs, setBeta})=>{
+const AllCards = ({eight, page, nextHandler, prevHandler, allTemps, handlerTemps, handlerPlace, handlerABC, handlerWeight, filteredDogs, setBeta, setEight})=>{
     useEffect(()=>{
         setBeta([...filteredDogs])
     }, [filteredDogs]);
