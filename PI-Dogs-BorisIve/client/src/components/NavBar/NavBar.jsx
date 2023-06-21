@@ -5,7 +5,7 @@ const NavBar = ()=>{
     return(
         <div>
             <SearchBar/>
-
+            <br />
             <NavLink to="/create">
                 <button>CREATE DOG</button>
             </NavLink>

@@ -56,8 +56,8 @@ function App() {
   // -------------------------------------------------
 
   // FILTROS -----------------------------------------
-  const handlerTemps = ()=>{
-
+  const handlerTemps = (event)=>{
+    dispatch(filtTemps(event.target.value));
   };
 
   const handlerPlace = (event)=>{
@@ -78,7 +78,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing/>} />
 
-        <Route path="/home" element={<Home eight={eight} page={page} nextHandler={nextHandler} prevHandler={prevHandler} allTemps={allTemps} handlerTemps={handlerTemps} handlerPlace={handlerPlace} handlerABC={handlerABC} handlerWeight={handlerWeight} filteredDogs={filteredDogs} setBeta={setBeta} />} />
+        <Route path="/home" element={<Home eight={eight} page={page} nextHandler={nextHandler} prevHandler={prevHandler} allTemps={allTemps} handlerTemps={handlerTemps} handlerPlace={handlerPlace} handlerABC={handlerABC} handlerWeight={handlerWeight} filteredDogs={filteredDogs} setBeta={setBeta} setPage={setPage} allDogs={allDogs} />} />
 
         <Route path="/detail/:id" element={<Detail/>} />
 

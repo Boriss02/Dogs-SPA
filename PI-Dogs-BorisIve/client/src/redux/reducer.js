@@ -3,7 +3,7 @@ import { GET_DOGS, GET_NAMES, GET_TEMPS, FILT_TEMPS, FILT_PLACE, FILT_ABC, FILT_
 const initialState = {
     allDogs: [],
     allTemps: [],
-    filteredDogs: [],
+    filteredDogs: []
 };
 
 const reducer = (state=initialState, action)=>{
@@ -13,13 +13,13 @@ const reducer = (state=initialState, action)=>{
                 ...state,
                 allDogs: action.payload
             };
-
+//------------------------------------------------------------------------------------------
         case GET_NAMES:
             return{
                 ...state,
                 allDogs: action.payload
             };
-
+//------------------------------------------------------------------------------------------
         case GET_TEMPS:
             return{
                 ...state,
@@ -34,21 +34,27 @@ const reducer = (state=initialState, action)=>{
                     return 0;
                 })
             };
-
+//------------------------------------------------------------------------------------------
         case FILT_TEMPS:
             return{
-                ...state
+                ...state,
+                filteredDogs:
+                    action.payload === "Default"
+                    ? [...state.allDogs] :
+                        state.allDogs?.filter(dog=> dog.temperament?.includes(action.payload))
             };
-
+//------------------------------------------------------------------------------------------
         case FILT_PLACE:
             return{
                 ...state,
-                filteredDogs: 
-                    action.payload === "API"
+                filteredDogs:
+                    action.payload === "Default"
+                    ? [...state.allDogs] :
+                        action.payload === "API"
                         ? state.allDogs.filter(dog=> !isNaN(dog.id))
                         : state.allDogs.filter(dog=> isNaN(dog.id))
             };
-
+//------------------------------------------------------------------------------------------
         case FILT_ABC:
             const alphabet = [...state.allDogs]
 
@@ -68,15 +74,21 @@ const reducer = (state=initialState, action)=>{
             return{
                 ...state,
                 filteredDogs:
-                    action.payload === "A-Z" ? AtoZ : ZtoA,
+                    action.payload === "Default"
+                    ? [...state.allDogs] :
+                        action.payload === "A-Z" ? AtoZ : ZtoA,
             };
-
+//------------------------------------------------------------------------------------------
         case FILT_WEIGHT:
             const weight = [...state.allDogs]
 
             const LtoH = weight.sort((a, b)=>{
-                const weightA = (Number(a.weight.split("-")[0]) + Number(a.weight.split("-")[1])) / 2;
-                const weightB = (Number(b.weight.split("-")[0]) + Number(b.weight.split("-")[1])) / 2;
+                const weightA = a.weight.length > 3
+                                    ? (Number(a.weight.split("-")[0]) + Number(a.weight.split("-")[1])) / 2
+                                    : Number(a.weight)
+                const weightB = b.weight.length > 3
+                                    ? (Number(b.weight.split("-")[0]) + Number(b.weight.split("-")[1])) / 2
+                                    : Number(b.weight)
 
                 if (weightA < weightB) return -1;
                 
@@ -90,9 +102,11 @@ const reducer = (state=initialState, action)=>{
             return{
                 ...state,
                 filteredDogs:
-                    action.payload === "Light-Heavy" ? LtoH : HToL
+                    action.payload === "Default"
+                    ? [...state.allDogs] :
+                        action.payload === "Light-Heavy" ? LtoH : HToL
             };
-
+//------------------------------------------------------------------------------------------
         default:
             return{...state};
     }

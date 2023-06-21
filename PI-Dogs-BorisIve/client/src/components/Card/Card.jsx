@@ -1,8 +1,9 @@
 import {Link} from "react-router-dom";
+import "./Card.css"
 
 const Card = ({key, id, image, name, temperament, weight})=>{
     return(
-        <div>
+        <div className="card">
             <Link to={`/detail/${id}`}>
                 {image && <img src={image} alt={name} />}
                 {name && <h2>Name: {name}</h2>}

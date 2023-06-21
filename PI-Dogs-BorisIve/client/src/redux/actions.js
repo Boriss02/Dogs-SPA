@@ -9,11 +9,8 @@ export const getDogs = ()=>{
     }
 };
 
-export const getNames = (name)=>{
-    return async (dispatch)=>{
-        const response = await axios.get(`${URL}dogs?name=${name}`)
-        dispatch({type: GET_NAMES, payload: response.data})
-    }
+export const getNames = (data)=>{
+    return {type: GET_NAMES, payload: data};
 };
 
 export const getTemps = ()=>{
@@ -25,8 +22,8 @@ export const getTemps = ()=>{
 
 
 // FILTROS ---------------------------------------------------------
-export const filtTemps = ()=>{
-
+export const filtTemps = (temp)=>{
+    return {type: FILT_TEMPS, payload: temp}
 };
 
 export const filtPlace = (place)=>{

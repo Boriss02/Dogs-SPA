@@ -1,0 +1,17 @@
+.card{
+    border: 5px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f7f7f7;
+}
+  
+.card img{
+    width: 35%;
+    max-height: 200px;
+    object-fit: cover;
+}
+  
+.card h2{
+    margin: 5px 0;
+}

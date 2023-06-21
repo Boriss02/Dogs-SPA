@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./Detail.css"
 const URL = "http://localhost:3001/";
 
 const Detail = ()=>{
@@ -19,7 +20,7 @@ const Detail = ()=>{
     }, [id])
 
     return(
-        <div>
+        <div className="detail">
             {detail.id && <h2>ID: {detail.id}</h2>}
             {detail.image && <img src={detail.image} alt={detail.name} />}
             {detail.name && <h2>NAME: {detail.name}</h2>}

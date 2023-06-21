@@ -1,0 +1,17 @@
+.detail{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px;
+    background-color: #f7f7f7;
+}
+  
+.detail img{
+    width: 30%;
+    max-height: 700px;
+    object-fit: cover;
+}
+  
+.detail h2{
+    margin: 10px;
+}

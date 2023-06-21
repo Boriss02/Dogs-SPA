@@ -2,6 +2,7 @@ import { useState } from "react";
 import validation from "./validation";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import "./Form.css"
 
 const Form = ({allTemps})=>{
     const [form, setForm] = useState({
@@ -56,7 +57,7 @@ const Form = ({allTemps})=>{
 
     
     return(
-        <div>
+        <div className="form-container">
             <NavLink to="/home">
                 <button>BACK</button>
             </NavLink>
