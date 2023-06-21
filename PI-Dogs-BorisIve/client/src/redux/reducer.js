@@ -23,7 +23,16 @@ const reducer = (state=initialState, action)=>{
         case GET_TEMPS:
             return{
                 ...state,
-                allTemps: action.payload.map(temp=> temp.name)
+                allTemps: action.payload.map(temp=> temp.name).sort((a, b)=>{
+                    const nameA = a.toUpperCase();
+                    const nameB = b.toUpperCase();
+    
+                    if (nameA < nameB) return -1;
+                    
+                    if (nameA > nameB) return 1;
+    
+                    return 0;
+                })
             };
 
         case FILT_TEMPS:
