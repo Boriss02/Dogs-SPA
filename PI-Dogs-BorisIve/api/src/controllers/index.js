@@ -54,7 +54,7 @@ const getIdApi = async (idRaza)=>{
             lifespan: ApiDog.life_span
         }
     } else {
-        throw Error("No se encontró un perro con ese ID")
+        throw Error("Not a dog found with that ID")
     }
 };
 
@@ -77,7 +77,7 @@ const getIdBD = async (idRaza)=>{
             lifespan: dogBD.lifespan
         }
     } else {
-        throw Error("No se encontró un perro con ese ID");
+        throw Error("Not a dog found with that ID");
     }
 };
 
@@ -87,11 +87,7 @@ const getDogsName = async (name)=>{
     const rawApiNames = await axios.get(`${searchRaza}${name}`);
     const apiNames = rawApiNames.data.map(dog=>{
         return {
-            id: dog.id,
-            image: dog.image,
-            name: dog.name,
-            temperament: dog.temperament,
-            weight: dog.weight.metric
+            name: dog.name
         }
     });
 
@@ -112,7 +108,7 @@ const getDogsName = async (name)=>{
     const allNames = [...namesBD, ...apiNames]
     
     if(!allNames.length){
-        throw Error("No existe raza parecida");
+        throw Error("There is no similar dog name");
     } else {
         return allNames;
     }
@@ -127,12 +123,18 @@ const postDog = async (name, height, weight, lifespan, temperaments)=>{
         height: height,
         weight: weight,
         lifespan: `${lifespan} years`
-    })
-    // console.log(preDog);
-    // const dogTemps = await Temperament.bulkCreate(temperaments);
-    const result = await preDog.addTemperament(dogTemps, {through: {selfGranted: false}});
-    console.log(result);
-    return result;
+    });
+
+    const theTemps = await Temperament.findAll({
+        where: {
+            name: temperaments
+        },
+        attributes: ["id"]
+    });
+    
+    const result = await preDog.setTemperaments(theTemps.map(temp=> temp.id));
+    if(result) return result;
+    else throw Error("Error at creation");
 };
 
 

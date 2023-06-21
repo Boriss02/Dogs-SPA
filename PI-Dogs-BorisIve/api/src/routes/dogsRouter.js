@@ -41,29 +41,14 @@ dogsRouter.get("/:idRaza", async (req, res)=>{
 });
 
 
-// dogsRouter.get("/name", async (req, res)=>{
-//     const {name} = req.query;
-//     console.log("hola");
-//     try {
-//         if(!name) throw Error("No se recibió ningún nombre");
-//         else {
-//             const dogsName = await getDogsName(name);
-//             res.status(200).json(dogsName);
-//         }
-//     } catch (error) {
-//         res.status(500).json(error.message);
-//     }
-// });
-
-
 dogsRouter.post("/", async (req, res)=>{
     console.log(req.body.dog);
-    const {name, height, weight, lifespan, temperaments} = req.body.dog;
+    const {name, height, weight, lifespan, temperaments} = req.body;
     try {
-        if(!name || !height || !weight || !lifespan || !temperaments.length) throw Error("Falta enviar información");
+        if(!name || !height || !weight || !lifespan || !temperaments.length) throw Error("Not enough information");
         else {
             const createdDog = await postDog(name, height, weight, lifespan, temperaments);
-            res.status(200).json(`El perro: ${createdDog}, fue creado exitosamente.`);
+            res.status(200).json(`Your dog: ${name}, was created succesfully`);
         }
     } catch (error) {
         res.status(500).json(error.message);
