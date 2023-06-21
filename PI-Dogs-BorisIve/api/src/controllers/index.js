@@ -87,6 +87,7 @@ const getDogsName = async (name)=>{
     const rawApiNames = await axios.get(`${searchRaza}${name}`);
     const apiNames = rawApiNames.data.map(dog=>{
         return {
+            id: dog.id,
             name: dog.name
         }
     });
@@ -101,6 +102,7 @@ const getDogsName = async (name)=>{
     });
     const namesBD = rawNamesBD.map(dog=>{
         return {
+            id: dog.uuid,
             name: dog.name
         }
     });
