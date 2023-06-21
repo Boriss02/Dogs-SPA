@@ -78,7 +78,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing/>} />
 
-        <Route path="/home" element={<Home eight={eight} page={page} nextHandler={nextHandler} prevHandler={prevHandler} allTemps={allTemps} handlerTemps={handlerTemps} handlerPlace={handlerPlace} handlerABC={handlerABC} handlerWeight={handlerWeight} filteredDogs={filteredDogs} setBeta={setBeta} setEight={setEight} />} />
+        <Route path="/home" element={<Home eight={eight} page={page} nextHandler={nextHandler} prevHandler={prevHandler} allTemps={allTemps} handlerTemps={handlerTemps} handlerPlace={handlerPlace} handlerABC={handlerABC} handlerWeight={handlerWeight} filteredDogs={filteredDogs} setBeta={setBeta} />} />
 
         <Route path="/detail/:id" element={<Detail/>} />
 

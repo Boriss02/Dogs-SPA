@@ -69,7 +69,29 @@ const reducer = (state=initialState, action)=>{
                 ...state,
                 filteredDogs:
                     action.payload === "A-Z" ? AtoZ : ZtoA,
-            }
+            };
+
+        case FILT_WEIGHT:
+            const weight = [...state.allDogs]
+
+            const LtoH = weight.sort((a, b)=>{
+                const weightA = (Number(a.weight.split("-")[0]) + Number(a.weight.split("-")[1])) / 2;
+                const weightB = (Number(b.weight.split("-")[0]) + Number(b.weight.split("-")[1])) / 2;
+
+                if (weightA < weightB) return -1;
+                
+                if (weightA > weightB) return 1;
+
+                return 0;
+            });
+
+            const HToL = [...LtoH].reverse();
+
+            return{
+                ...state,
+                filteredDogs:
+                    action.payload === "Light-Heavy" ? LtoH : HToL
+            };
 
         default:
             return{...state};

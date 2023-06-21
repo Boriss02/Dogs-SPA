@@ -1,10 +1,12 @@
 import Card from "../Card/Card";
 import { useEffect } from "react";
 
-const AllCards = ({eight, page, nextHandler, prevHandler, allTemps, handlerTemps, handlerPlace, handlerABC, handlerWeight, filteredDogs, setBeta, setEight})=>{
+const AllCards = ({eight, page, nextHandler, prevHandler, allTemps, handlerTemps, handlerPlace, handlerABC, handlerWeight, filteredDogs, setBeta})=>{
     useEffect(()=>{
-        setBeta([...filteredDogs])
-    }, [filteredDogs]);
+        if(filteredDogs.length){
+            setBeta([...filteredDogs])
+        }
+    }, [filteredDogs, setBeta]);
 
     return(
         <div>
@@ -26,9 +28,10 @@ const AllCards = ({eight, page, nextHandler, prevHandler, allTemps, handlerTemps
             
 
             <select onChange={(event)=>{handlerWeight(event)}} >
-                <option value="Heavy-Light">Heavy-Light</option>
                 <option value="Light-Heavy">Light-Heavy</option>
+                <option value="Heavy-Light">Heavy-Light</option>
             </select>
+
 
             {
                 eight.map((dog)=>{
